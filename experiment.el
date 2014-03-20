@@ -257,15 +257,24 @@
        (cond ,@(let ((counter -1))
                  (mapcar #'(lambda (expr)
                              (incf counter)
-                             `((eq ,condition-sym ,counter))
+                             `((eq ,condition-sym ,counter) ,expr)
                              )
-                         ,expressions)))
+                         expressions)))
        )))
 
 (nth-expr 1 (+ 1 2) (* 3 4) (+ 100 7))
 
 ; well, SHIT, that is not working right. Tells me Symbol \ is not a function or some shit like that. Gonna have to give it up for
 ;  tonight and go to fucking BED. Back at it tomorrow. Later!
+
+; AND THERE IT IS! I Got up this morning and knocked it right out. Just needed a little tweaking. The second arg to mapcar was
+;   not the list of expressions, as I intended, but instead, (/, expressions). The / somehow arose from the fact that I had an unneeded
+;   comma in front of "expressions". The comma was unneeded because we were still inside the scope of ",@". And the only remaining
+;   thing I had to do was add " ,expr" to the "eq" line. Now I've confirmed it works properly and only evaluates the expression that
+;   is chosen!
+
+; A nested backquote is no big mystery. It's just like a nested regular quote, except it lets you "opt out of literalness" in the middle
+;   somewhere. Sweet.
 
 
 
