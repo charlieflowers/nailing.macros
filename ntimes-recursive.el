@@ -57,3 +57,6 @@
 ;   at the bottom of this file even though it's not a package. So lemme run it in the repl.
 
 ; YES!!! Working BEAUTIFULLY!!!
+;
+; HOWEVER, NOTE FOR FUTURE REFERENCE. The expansion for that sumbitch is BIG. That's because FLET's expansion is BIG. So in the future,
+;    I'll probably shy away from FLET, and just use a LET (in Emacs lisp that is), and find some way to do the function call indirection.
