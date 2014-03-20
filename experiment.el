@@ -235,8 +235,39 @@
 ;   gonna use it. I'll turn it on in this file and use it for this macro.
 
 ; The idea is to define a variable for the counter, use it in the mapcar function, and increment it in the mapcar function.
-(let ((counter 0)))
-(mapcar #'(lambda (expr) `((eq x c) expr)) '((+ 1 2) (* 3 4) (+ 100 7)))
+(let ((counter -1))
+  (mapcar #'(lambda (expr)
+              (incf counter)
+              `((eq x ,counter) ,expr))
+          '((+ 1 2) (* 3 4) (+ 100 7))))
+
+; Yes, that is looking good. I *think* that "counter" is safe from variable capture, but my brain is sleepy now at nearly 1 am, and I'll
+;   have to figure that out tomorrow. But, I can proceed with the code I have here and implement the macro tonight, hell yes.
+; Again, here's the desired expansion code:
+
+(let ((G342 1))
+  (cond ((eq G342 0) (print "expression 0"))
+        ((eq G342 1) (* 3 4))
+        ((eq G342 2) (+ 100 7))
+        (t (error "You didn't give enough expressions for that number"))))
+
+(defmacro nth-expr (n &rest expressions)
+  (let ((condition-sym (cl-gensym "condition-value")))
+    `(let ((,condition-sym ,n))
+       (cond ,@(let ((counter -1))
+                 (mapcar #'(lambda (expr)
+                             (incf counter)
+                             `((eq ,condition-sym ,counter))
+                             )
+                         ,expressions)))
+       )))
+
+(nth-expr 1 (+ 1 2) (* 3 4) (+ 100 7))
+
+; well, SHIT, that is not working right. Tells me Symbol \ is not a function or some shit like that. Gonna have to give it up for
+;  tonight and go to fucking BED. Back at it tomorrow. Later!
+
+
 
 
 
