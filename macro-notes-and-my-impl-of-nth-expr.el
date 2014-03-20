@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 
-; This is where I FULLY NAIL macros ONCE AND FOR ALL
+; This project is where I FULLY NAIL macros ONCE AND FOR ALL
 
 (require  'cl)
 
@@ -276,45 +276,4 @@
 ; A nested backquote is no big mystery. It's just like a nested regular quote, except it lets you "opt out of literalness" in the middle
 ;   somewhere. Sweet.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-(test-it 0)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(provide 'experiment)
+(provide 'macro-notes-and-my-impl-of-nth-expr)
