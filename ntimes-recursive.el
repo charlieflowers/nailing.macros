@@ -60,3 +60,22 @@
 ;
 ; HOWEVER, NOTE FOR FUTURE REFERENCE. The expansion for that sumbitch is BIG. That's because FLET's expansion is BIG. So in the future,
 ;    I'll probably shy away from FLET, and just use a LET (in Emacs lisp that is), and find some way to do the function call indirection.
+;
+; In fact, the expansion was so ugly, I decided to write a funcall version for comparison. Here 'tis.
+
+;(defmacro ntimes-recursive-funcall (n &rest actions) ;; AHHH, this doesn't work, grasshoppa!
+;  `(let* ((f (lambda (x)
+;              ,@actions
+;              (if (> x 1) (f (- x 1)))
+;              )))
+;     (f ,n)))
+;
+;(ntimes-recursive-funcall 3 (print "hi") (print "there"))
+
+; The above doesn't work. That stackoverflow post I saw was correct that funcall would make let be ok. However, when I go to make the
+;   recursive call, the name "f" doesn't exist. BUT WAIT A MINUTE! MAYBE THIS IS BECAUSE I DON'T HAVE LEXICAL SCOPING TURNED ON???
+;   NOPE! That's NOT why. So the way lambda is implemented, it does not make the name of the variable you're assigning the lambda to
+;   available to the lambda. Really, this seems to be a limitation of the let form. Hmmmm.....
+
+; There is a way to do this in Emacs Lisp without using the CL package. That's by having a helper lambda, that you pass the function
+;    into, that then calls what you passed in. Hell, I think this is getting close to some kind or another of a combinator.
